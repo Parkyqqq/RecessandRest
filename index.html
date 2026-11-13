@@ -257,6 +257,40 @@ body.in main{filter:brightness(.82) saturate(.9)}
 .gsr span{flex:1;letter-spacing:.2em}
 .gsr i{font-style:normal;color:#b8b4a8}
 #dnc{width:100%;display:block;border-radius:8px;background:#f1efea;touch-action:none;cursor:pointer}
+
+.ch-in input{flex:1;min-width:0;background:none;border:0;outline:0;color:#e8e6dc;font:inherit}
+.ch-in input::placeholder{color:#8a8577}
+.ch-in.on{pointer-events:auto}.ch-in.on .sbtn{cursor:pointer}
+#chp{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:78px;width:min(320px,calc(100% - 28px));z-index:30;background:#30302e;border:1px solid #ffffff2e;border-radius:14px;box-shadow:0 8px 24px #0006;font-size:13px;overflow:hidden}
+.chh{display:flex;align-items:center;gap:8px;padding:9px 12px;color:#e8e6dc;cursor:pointer;user-select:none}
+.chh b{font-weight:600;flex:1}
+#chn{background:#d97757;color:#fff;border-radius:10px;padding:0 7px;font-size:12px;line-height:18px}
+#chn:empty{display:none}
+#chx{background:none;border:0;color:#9a968a;font-size:16px;cursor:pointer;padding:0 2px;transition:transform .15s}
+#chp.min #chx{transform:rotate(180deg)}
+#chp.min #chl{display:none}
+#chp.nw .chh{animation:chnw 1.2s ease-in-out infinite}
+@keyframes chnw{50%{background:#d9775733}}
+#chl{max-height:min(36vh,240px);overflow-y:auto;padding:4px 12px 10px;display:flex;flex-direction:column;gap:6px;border-top:1px solid #ffffff14}
+.cm{line-height:1.5;color:#e8e6dc;word-break:break-word}
+.cm i{font-style:normal;color:#9a968a;margin-right:6px}
+.cm.me i{color:#d97757}
+.cme{color:#9a968a;padding:6px 0}
+#brbo{position:fixed;inset:0;z-index:25;display:flex;align-items:center;justify-content:center;pointer-events:none;background:#0000004d}
+#brbt{background:#262624;border:1px solid #d97757;color:#f0c9b8;border-radius:16px;padding:22px 34px;font-size:22px;box-shadow:0 12px 40px #000a;max-width:calc(100% - 40px);text-align:center;line-height:1.5}
+@keyframes rglow{0%,100%{box-shadow:0 0 0 2px #e6c36a55,0 0 8px #e6c36a44}50%{box-shadow:0 0 0 2px #f6dc8f,0 0 22px #f6dc8faa}}
+@keyframes rglow2{0%,100%{box-shadow:0 0 0 2px #8f9fe655,0 0 8px #8f9fe644}50%{box-shadow:0 0 0 2px #aab6f6,0 0 20px #aab6f6aa}}
+@keyframes rshim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes rtw{0%,100%{opacity:.55}50%{opacity:1}}
+#rc.turn{position:relative;overflow:hidden;border-radius:10px}
+#rc.turn{animation:rglow2 1.8s ease-in-out infinite;padding:8px 8px 8px;margin-bottom:8px}
+#rc.turn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,#ffffff2e 50%,transparent 65%);background-size:200% 100%;animation:rshim 2.2s linear infinite;pointer-events:none}
+.rtc{text-align:center;font-size:14px;min-height:22px;margin:2px 0 6px;animation:rtw 1.4s ease-in-out infinite}
+.rtc:empty{animation:none}
+.rtc.me{color:#f0d78a}.rtc.op{color:#b4bff0}
+#rt{display:grid;grid-auto-flow:column;grid-template-rows:repeat(5,auto);grid-auto-columns:minmax(0,1fr);column-gap:8px;align-items:start}
+@media (max-width:560px){#rt{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){#rc.turn,.rtc,#rc.turn::after,#chp.nw .chh{animation:none}}
 </style>
 </head>
 <body class="lobby">
@@ -278,7 +312,9 @@ body.in main{filter:brightness(.82) saturate(.9)}
 <p>從下方選一個項目就能開始。<span class="caret"></span></p>
 </div></div>
 </div>
-<div class="ch-in" aria-hidden="true"><span>Reply to Claude…</span><span class="sbtn">↑</span></div>
+<div class="ch-in" id="chin"><input id="chi" placeholder="Reply to Claude…" maxlength="80" autocomplete="off" spellcheck="false" disabled><span class="sbtn" id="chs">↑</span></div>
+<div id="chp" hidden><div class="chh"><b>聊天室</b><span id="chn"></span><button id="chx" aria-label="收合或展開">▾</button></div><div id="chl"></div></div>
+<div id="brbo" hidden><div id="brbt"></div></div>
 <div class="ov" id="um"><div class="ovp"><h3>選擇遊玩方式</h3><p id="umd" style="margin:0 0 12px;font-size:13px;line-height:1.6;color:#b8b4a8">匿名遊玩不會記錄成績。取一個名稱就能上排行榜（排行榜只存在這個瀏覽器）。</p><input id="uin" maxlength="12" placeholder="使用者名稱（2 到 12 個字）" autocomplete="off" spellcheck="false"><div id="ume" style="min-height:1.4em;font-size:13px;color:#e08a82;margin-bottom:8px"></div><div class="row"><button class="btn pri" id="usv">確認</button><button class="btn" id="uan">匿名遊玩</button></div></div></div>
 <div class="ov" id="lbm"><div class="ovp"><h3>排行榜</h3><select id="lbs"></select><div id="lbl"></div><div class="row" style="margin-top:12px"><button class="btn" id="lbx">關閉</button></div></div></div>
 <div id="nc"><div class="nc-in"><div class="nc-h"><span class="nc-logo">✻</span><span id="ncg">Good afternoon</span></div><div class="nc-box"><span class="nc-ph">今天想聊些什麼？</span><div class="nc-bt"><span>＋</span><span class="nc-sp"></span><span class="nc-m">Sonnet 5.5 ⌄</span><span class="nc-send">↑</span></div></div><div class="nc-chips"><span>寫作</span><span>學習</span><span>程式</span><span>生活</span></div></div></div>
@@ -329,6 +365,7 @@ body.in main{filter:brightness(.82) saturate(.9)}
 <div id="rt"></div>
 <div class="stat" style="justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0"><button class="btn" id="rbn">放到新組</button><button class="btn" id="rbb">收回手牌</button><button class="btn" id="rbc">取消選取</button><button class="btn" id="rbu">復原上一步</button><button class="btn" id="rbr">重置本回合</button></div>
 <div id="rr"></div>
+<div class="rtc" id="rtc"></div>
 <div class="stat" style="justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0 0"><button class="btn" id="rs1">依顏色排序</button><button class="btn" id="rs2">依數字排序</button><button class="btn" id="rbd">抽一張牌</button><button class="btn" id="rbe">完成回合</button></div>
 <div id="rwarn" hidden></div>
 <p class="msg" id="rinfo" style="margin-top:6px"></p>
@@ -1048,6 +1085,59 @@ const RC=["#3f4348","#6b84a0","#a4605f","#b5894a","#7d6a92"];
 
 /* 通用多人（房間代碼）*/
 var NX={};
+/* 聊天室與「請稍等」置中提示 */
+var CH={out:[],n:0,key:null,seen:{},unread:0,sid:Math.random().toString(36).slice(2,8)};
+function chActive(){
+ for(const k in NX){const x=NX[k];if(x&&x.st)return{pub:p=>x.pub(p),key:k+x.st.code}}
+ if(typeof MP!=="undefined"&&MP&&cur=="tetris")return{pub:p=>MP.r.presence(p).catch(()=>{}),key:"tb"+MP.code};
+ return null;
+}
+function chAdd(who,t,me){
+ const l=$("chl");
+ const d=document.createElement("div");d.className="cm"+(me?" me":"");
+ const i=document.createElement("i");i.textContent=who;d.append(i,document.createTextNode(t));
+ l.appendChild(d);l.scrollTop=l.scrollHeight;
+}
+function chSync(){
+ const a=chActive(),k=a?a.key:null;
+ if(k!==CH.key){CH.key=k;CH.out=[];CH.n=0;CH.seen={};CH.unread=0;$("chl").textContent="";$("chn").textContent="";$("chp").classList.remove("nw");
+  if(k){const e=document.createElement("div");e.className="cme";e.textContent="和對手聊天，在下方輸入框送出";$("chl").appendChild(e)}}
+ $("chp").hidden=!k;$("chin").classList.toggle("on",!!k);$("chi").disabled=!k;
+ if(!k)$("chi").blur();
+}
+function chRecv(pr,nm){
+ if(!pr||!pr.ch||!pr.ch.s||!Array.isArray(pr.ch.l))return;
+ const s=pr.ch.s,top=CH.seen[s]||0;let mx=top;
+ pr.ch.l.forEach(m=>{
+  if(!m||typeof m.i!=="number"||m.i<=top||typeof m.t!=="string")return;
+  mx=Math.max(mx,m.i);chAdd(nm||"對手",m.t.slice(0,80),false);
+  if($("chp").classList.contains("min")){CH.unread++;$("chn").textContent=CH.unread;$("chp").classList.add("nw")}
+ });
+ CH.seen[s]=mx;
+}
+function chSend(){
+ const a=chActive(),v=$("chi").value.trim().slice(0,80);
+ if(!a||!v)return;
+ CH.n++;CH.out.push({i:CH.n,t:v});if(CH.out.length>5)CH.out.shift();
+ a.pub({ch:{s:CH.sid,l:CH.out}});
+ chAdd("你",v,true);$("chi").value="";
+ $("chp").classList.remove("min");CH.unread=0;$("chn").textContent="";$("chp").classList.remove("nw");
+}
+$("chi").addEventListener("keydown",e=>{if(e.key=="Escape")return;e.stopPropagation();if(e.key=="Enter"&&!e.isComposing){e.preventDefault();chSend()}});
+$("chs").onclick=()=>{if(!$("chi").disabled)chSend()};
+$("chin").addEventListener("click",()=>{if(!$("chi").disabled)$("chi").focus()});
+$("chp").classList.add("min");
+$("chp").querySelector(".chh").onclick=()=>{
+ const p=$("chp");p.classList.toggle("min");
+ if(!p.classList.contains("min")){CH.unread=0;$("chn").textContent="";p.classList.remove("nw");$("chl").scrollTop=$("chl").scrollHeight}
+};
+setInterval(chSync,300);
+var BRB={};
+function brbSet(k,t){
+ BRB[k]=t||"";const v=Object.values(BRB).find(Boolean);
+ $("brbo").hidden=!v;if(v)$("brbt").textContent=v;
+}
+
 async function nxDiag(){return "（PeerJS："+(typeof Peer!=="undefined"?"已載入":"沒有載入，可能被網路或擋廣告外掛擋住")+"）"}
 const nxNoRoom="無法使用雙人：連線元件沒有載入，請確認網路正常，並關閉會擋 unpkg.com 的外掛後重新整理。";
 
@@ -1073,8 +1163,9 @@ function nxInit(k,secId,hooks){
    const sb=q(".mpst");
    sb.hidden=!(x.st&&x.st.host&&o&&hooks.started&&!hooks.started(x));
    if(!sb.hidden)q(".mpsm").textContent="🔔 "+nm+" 已加入房間！";
-   bn.hidden=!(x.st&&o&&o.presence.br);
-   if(!bn.hidden)bn.textContent="⏳ "+nm+" 有事需要稍等一下…";
+   bn.hidden=true;
+   brbSet("nx"+k,x.st&&o&&o.presence.br?"⏳ "+nm+" 有事需要稍等一下…":"");
+   chRecv(o&&o.presence,o&&o.presence.nm);
   },
   opp(){
    if(!x.st)return null;
@@ -1210,6 +1301,10 @@ function rRender(){
  const tl=x=>`<button class="rt${R.sel.has(x.id)?" sl":""}${x.t?" nw":""}${x.a?" ai":""}" data-id="${x.id}" style="--tc:${RC[x.c]}"><b>${x.j?"★":x.n}</b><i></i></button>`;
  $("rt").innerHTML=R.sets.length?R.sets.map((s,i)=>{const L=rLay(s);return `<div class="rs ${L?"ok":"bad"}"><div class="rtl">${(L?L.arr:s.slice().sort((a,b)=>a.n-b.n||a.c-b.c)).map(tl).join("")}</div><button class="btn rp" data-set="${i}">＋</button></div>`}).join(""):`<p class="msg">桌面還沒有牌組</p>`;
  $("rr").innerHTML=R.rack.map(tl).join("");
+ {const act=!R.won&&(R.mp?!!R.rk:true)&&!R.res,mine=act&&!R.busy,wait=act&&R.busy;
+  $("rr").classList.toggle("turn",mine);$("rc").classList.toggle("turn",wait);
+  const c=$("rtc");c.className="rtc"+(mine?" me":wait?" op":"");
+  c.textContent=mine?"✨ 輪到你了 ✨":wait?"⏳ 等待對方出牌…":"";}
  let info="";
  if(!R.hm&&!R.won){let pts=0;R.sets.forEach(s=>{if(s.every(x=>x.t)&&rOk(s))pts+=rLay(s).pts});info="第一次出牌需要至少 30 點，目前你新排的牌組共 "+pts+" 點"}
 
@@ -2047,7 +2142,9 @@ function mpUi(){
  if(MP)$("mpcode").textContent=MP.code.toUpperCase();
  {const bn=$("mpbn");$("mpb").classList.toggle("brb-on",!!(MP&&MP.brb));$("mpb").textContent=MP&&MP.brb?"我回來了":"請稍等";
   const jn=$("mpjn");jn.hidden=!(MP&&MP.host&&tb.mp&&tb.wait&&o);if(!jn.hidden)jn.textContent="🔔 "+(o.presence.nm||"朋友")+" 已加入房間！請按下方 Start 開始遊戲";
-  bn.hidden=!(o&&o.presence.br);if(!bn.hidden)bn.textContent="⏳ "+(o.presence.nm||"朋友")+" 有事需要稍等一下…"}
+  bn.hidden=true;
+  brbSet("tb",MP&&o&&o.presence.br?"⏳ "+(o.presence.nm||"朋友")+" 有事需要稍等一下…":"");
+  chRecv(o&&o.presence,o&&o.presence.nm)}
  $("tbst").hidden=!(MP&&MP.host&&tb.mp&&tb.wait&&o);
  $("tbpa").hidden=true;$("tbre").hidden=true;
  if(!MP){return}
@@ -2080,7 +2177,7 @@ async function mpEnter(code,host){
 }
 function mpLeave(){
  if(!MP)return;
- const m=MP;MP=null;
+ const m=MP;MP=null;brbSet("tb","");
  try{m.unsub&&m.unsub()}catch(e){}
  try{m.r.leave()}catch(e){}
  clearInterval(tb.t);
@@ -2392,6 +2489,7 @@ addEventListener("keydown",e=>{
   return;
  }
  const t=e.target,ov=$("um").classList.contains("on")||$("lbm").classList.contains("on");
+ if(t&&t.id=="chi")return;
  if(ov||(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))e.stopImmediatePropagation();
 },true);
 $("codetab").onclick=bossOpen;
