@@ -214,7 +214,10 @@ body.in #chat{display:none}
 #cpre span{filter:brightness(1.8) saturate(1.1)}
 .ch-in{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(680px,calc(100% - 28px));margin:0;background:#30302e;border:1px solid #ffffff22;color:#9a968a;z-index:20;pointer-events:none;border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
 .pile{border-color:#ffffff2e}
-body.in main{filter:brightness(.82) saturate(.9)}
+#dim{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:80}
+#dimp{position:fixed;top:52px;right:12px;z-index:85;background:#30302e;border:1px solid #ffffff22;border-radius:12px;padding:10px 14px;color:#e8e6dc;font-size:13px;display:none;align-items:center;gap:10px}
+#dimp.on{display:flex}
+#dimp input{width:140px;accent-color:#d97757}
 #win div{filter:brightness(.85)}
 .chip{background:#30302e;border:1px solid #ffffff22;border-radius:8px;color:#b8b4a8;font-size:12px;padding:4px 10px;cursor:pointer;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ov{display:none;position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:16px}
@@ -360,7 +363,8 @@ body.in main{filter:brightness(.82) saturate(.9)}
 <div class="ov" id="um"><div class="ovp"><h3>選擇遊玩方式</h3><p id="umd" style="margin:0 0 12px;font-size:13px;line-height:1.6;color:#b8b4a8">取一個名稱，和朋友一起玩時會顯示給對方看，名稱不能和別人重複。也可以直接匿名遊玩。</p><input id="uin" maxlength="12" placeholder="使用者名稱（2 到 12 個字）" autocomplete="off" spellcheck="false"><div id="ume" style="min-height:1.4em;font-size:13px;color:#e08a82;margin-bottom:8px"></div><div class="row"><button class="btn pri" id="usv">確認</button><button class="btn" id="uan">匿名遊玩</button></div></div></div>
 <div id="nc"><div class="nc-in"><div class="nc-h"><span class="nc-logo">✻</span><span id="ncg">Good afternoon</span></div><div class="nc-box"><span class="nc-ph">今天想聊些什麼？</span><div class="nc-bt"><span>＋</span><span class="nc-sp"></span><span class="nc-m">Sonnet 5.5 ⌄</span><span class="nc-send">↑</span></div></div><div class="nc-chips"><span>寫作</span><span>學習</span><span>程式</span><span>生活</span></div></div></div>
 <div id="boss"><div class="cb"><b>✻ Welcome to Claude Code!</b><br><span>/help for help, /status for your current setup<br><br>cwd: ~/projects/orders-dashboard</span></div><div id="bl"></div><div class="bp"><div class="bsp"><span id="bsy">✻</span> Cogitating… <span id="bst">(0s · esc to interrupt)</span></div><div class="bin">&gt; <span class="caret"></span></div><div class="bhint">? for shortcuts</div></div></div>
-<header><button id="back" hidden>‹ Back</button><h1 id="ttl">System</h1><button id="uchip" class="chip">Guest</button><span class="seg2"><span class="on">Preview</span><span id="codetab">Code</span></span></header>
+<header><button id="back" hidden>‹ Back</button><h1 id="ttl">System</h1><button id="dimb" class="chip" title="亮度">☀</button><button id="uchip" class="chip">Guest</button><span class="seg2"><span class="on">Preview</span><span id="codetab">Code</span></span></header>
+<div id="dim"></div><div id="dimp"><span>亮度</span><input id="dimr" type="range" min="30" max="100" value="100"><span id="dimv">100%</span></div>
 <main class="wrap">
 <section id="s-lobby">
 <div class="grid">
@@ -3251,6 +3255,23 @@ const tgOppRows=(T,box,S)=>{
  });
 };
 
+
+/* 亮度調整（大廳與遊戲內都可用） */
+(function(){
+ var r=$("dimr"),v=$("dimv"),d=$("dim"),pp=$("dimp"),b=$("dimb");
+ var set=function(n){n=Math.max(30,Math.min(100,+n||100));r.value=n;v.textContent=n+"%";d.style.opacity=((100-n)/100).toFixed(2)};
+ var sv=100;try{sv=+localStorage.getItem("arc_bri")||100}catch(e){}
+ set(sv);
+ r.oninput=function(){set(r.value);try{localStorage.setItem("arc_bri",r.value)}catch(e){}};
+ b.onclick=function(e){e.stopPropagation();pp.classList.toggle("on");
+  if(!pp.classList.contains("on"))return;
+  var br=b.getBoundingClientRect(),hr=($("uchip").parentNode||b).getBoundingClientRect(),ph=pp.offsetHeight,pw=pp.offsetWidth;
+  var top=hr.top-ph-6;if(top<4)top=hr.bottom+6;
+  var right=Math.max(8,innerWidth-hr.right+8);
+  pp.style.top=top+"px";pp.style.right=right+"px"};
+ pp.onclick=function(e){e.stopPropagation()};
+ document.addEventListener("click",function(){pp.classList.remove("on")});
+})();
 /* ---------- UNO ---------- */
 const UNCN=["紅","黃","綠","藍"],UNCL=["r","y","g","b"];
 function unCard(id){
